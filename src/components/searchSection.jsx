@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const SearchSection = ({ onSearch }) => {
+const SearchSection = ({ onSearch, onCategorySelect }) => {
   const [budget, setBudget] = useState("");
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("For You");
@@ -70,21 +70,29 @@ const SearchSection = ({ onSearch }) => {
 
   const handleCategoryClick = (category) => {
     setActiveCategory(category.name);
-    onSearch({ category: category.name, query, budget });
+    // Call the category select handler if provided
+    if (onCategorySelect) {
+      onCategorySelect(category.name);
+    }
+    if (onSearch) {
+      onSearch({ category: category.name, query, budget });
+    }
   };
 
   const handleSearch = () => {
-    onSearch({ query, budget, category: activeCategory });
+    if (onSearch) {
+      onSearch({ query, budget, category: activeCategory });
+    }
   };
 
   return (
     <div className="w-full max-w-5xl mx-auto px-3 md:px-6 pt-4 md:pt-8 pb-3 md:pb-6">
       {/* Heading */}
       <div className="text-center mb-6 md:mb-8">
-        <h1 className="text-headingLG md:text-headingXL font-bold text-dark mb-2">
+        <h1 className="text-headingLG md:text-headingXL text-primary font-bold text-dark mb-2">
           ASK SRAVA Before You Buy
         </h1>
-        <p className="text-labelMD md:text-valueLG text-gray-600 max-w-md mx-auto">
+        <p className="text-labelMD md:text-valueLG text-gray-600 text-accent max-w-md mx-auto">
           Get honest recommendations from Amazon & Flipkart
         </p>
       </div>
