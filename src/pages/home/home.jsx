@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 
+import Header from '../../components/header';
+import SearchSection from '../../components/searchSection';
 
-import Header from '../../components/Header';
-import SearchSection from '../../components/SearchSection';
-import ResultsSection from '../../components/ResultsSection';
-import ComparisonModal from '../../components/ComparisonModal';
+import ComparisonModal from '../../components/comparisonModal';
+
 
 const Home = () => {
   const [results, setResults] = useState(null);
   const [comparison, setComparison] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState('home');
+  const [activeCategory, setActiveCategory] = useState('all');
 
   const handleSearch = async (searchData) => {
     setLoading(true);
@@ -37,36 +39,35 @@ const Home = () => {
     }
   };
 
+  const handleTabChange = (tabId) => {
+    setActiveTab(tabId);
+    if (tabId === 'home') {
+      setResults(null);
+    }
+  };
+
+  const handleCategorySelect = (categoryId) => {
+    setActiveCategory(categoryId);
+    // Trigger search based on category
+    handleSearch({ category: categoryId });
+  };
+
   return (
-    <div className="min-h-screen bg-secondary">
+    <div className="min-h-screen bg-secondary pb-16 md:pb-0">
       <Header />
       
-      {!results ? (
-        <SearchSection onSearch={handleSearch} />
-      ) : (
+     
         <div>
-          <div className="max-w-6xl mx-auto px-4 py-6">
-            <button
-              onClick={() => setResults(null)}
-              className="text-primary hover:underline text-labelMD font-medium"
-            >
-              ← Back to search
-            </button>
-          </div>
-          {loading ? (
-            <div className="text-center py-12">
-              <div className="text-headingMD text-gray-600">Finding best products...</div>
-            </div>
-          ) : (
-            <ResultsSection results={results} onCompare={handleCompare} />
-          )}
+          <SearchSection onSearch={handleSearch} />
+    
         </div>
-      )}
+
 
       <ComparisonModal 
         comparison={comparison} 
         onClose={() => setComparison(null)} 
       />
+
     </div>
   );
 };

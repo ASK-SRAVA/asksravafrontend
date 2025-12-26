@@ -1,74 +1,137 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const SearchSection = ({ onSearch }) => {
-  const [budget, setBudget] = useState('');
-  const [query, setQuery] = useState('');
+  const [budget, setBudget] = useState("");
+  const [query, setQuery] = useState("");
+  const [activeCategory, setActiveCategory] = useState("For You");
 
   const categories = [
-    { id: 1, name: 'Electronics', icon: '📱' },
-    { id: 2, name: 'Fashion', icon: '👕' },
-    { id: 3, name: 'Home & Kitchen', icon: '🏠' },
-    { id: 4, name: 'Books', icon: '📚' },
-    { id: 5, name: 'Sports', icon: '⚽' },
-    { id: 6, name: 'Beauty', icon: '💄' }
+    {
+      id: 1,
+      name: "For You",
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg>
+      ),
+    },
+    {
+      id: 2,
+      name: "Fashion",
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+      ),
+    },
+    {
+      id: 3,
+      name: "Mobiles",
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+            d="M12 18h.01M8 21h8a1 1 0 001-1V4a1 1 0 00-1-1H8a1 1 0 00-1 1v16a1 1 0 001 1z" />
+        </svg>
+      ),
+    },
+    {
+      id: 4,
+      name: "Electronics",
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+            d="M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+      ),
+    },
+    {
+      id: 5,
+      name: "Appliances",
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+            d="M9 17h6m-3-3v6m-7-6h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2z" />
+        </svg>
+      ),
+    },
+    {
+      id: 6,
+      name: "Beauty",
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg>
+      ),
+    },
   ];
 
   const handleCategoryClick = (category) => {
-    onSearch({ category: category.name, budget, query });
+    setActiveCategory(category.name);
+    onSearch({ category: category.name, query, budget });
   };
 
   const handleSearch = () => {
-    if (query.trim()) {
-      onSearch({ query, budget });
-    }
+    onSearch({ query, budget, category: activeCategory });
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
-      <div className="text-center mb-12">
-        <h2 className="text-headingXL font-bold text-dark mb-4">
+    <div className="w-full max-w-5xl mx-auto px-3 md:px-6 pt-4 md:pt-8 pb-3 md:pb-6">
+      {/* Heading */}
+      <div className="text-center mb-6 md:mb-8">
+        <h1 className="text-headingLG md:text-headingXL font-bold text-dark mb-2">
           ASK SRAVA Before You Buy
-        </h2>
-        <p className="text-valueLG text-gray-600">
+        </h1>
+        <p className="text-labelMD md:text-valueLG text-gray-600 max-w-md mx-auto">
           Get honest recommendations from Amazon & Flipkart
         </p>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
-        <div className="flex flex-col md:flex-row gap-4 mb-6">
-          <input
-            type="text"
-            placeholder="Search for any product..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-          />
-          <input
-            type="number"
-            placeholder="Budget (₹)"
-            value={budget}
-            onChange={(e) => setBudget(e.target.value)}
-            className="w-full md:w-32 px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-          />
-          <button
-            onClick={handleSearch}
-            className="px-6 py-3 bg-primary text-secondary font-medium rounded-lg hover:bg-opacity-90 transition-colors"
-          >
-            Search
-          </button>
+      {/* Search */}
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-6">
+        <div className="flex items-center gap-3 md:gap-4">
+          <div className="w-full">
+            <input
+              type="text"
+              placeholder="Search for any product…"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className="w-full px-4 md:px-5 py-3 md:py-4 border border-gray-200 rounded-xl text-labelMD md:text-labelLG placeholder-gray-400 transition-all border border-primary"
+            />
+          </div>
+  
+ 
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => handleCategoryClick(category)}
-              className="p-4 border border-gray-200 rounded-lg hover:border-primary hover:bg-primary hover:bg-opacity-5 transition-colors text-center"
-            >
-              <div className="text-2xl mb-2">{category.icon}</div>
-              <div className="text-labelSM font-medium text-dark">{category.name}</div>
-            </button>
-          ))}
+        {/* Horizontal Category Tabs */}
+        <div className="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-gray-100">
+          <div className="flex items-center gap-4 md:gap-20 justify-center overflow-x-auto scrollbar-hide pb-2">
+            {categories.map((cat) => {
+              const isActive = activeCategory === cat.name;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => handleCategoryClick(cat)}
+                  className={`flex flex-col items-center gap-1 pb-2
+                              whitespace-nowrap transition-colors
+                              ${
+                                isActive
+                                  ? "text-primary border-b-2 border-primary"
+                                  : "text-gray-600 hover:text-gray-800"
+                              }`}
+                >
+                  <div className="w-5 h-5 md:w-6 md:h-6 flex items-center justify-center">
+                    {React.cloneElement(cat.icon, { className: "w-5 h-5 md:w-6 md:h-6" })}
+                  </div>
+                  <span className="text-labelXS md:text-labelSM font-medium leading-tight">
+                    {cat.name}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
