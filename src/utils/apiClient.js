@@ -3,10 +3,7 @@ import getSravaOptions from "./sravaUtils";
 
 
 const options = getSravaOptions();
-console.log("1",options)
 const API_URL = `${options.baseUrl}`;
-
-console.log(API_URL);
 
 export const apiClient = axios.create({
   baseURL: API_URL,

@@ -1,146 +1,168 @@
 import React, { useEffect, useState } from "react";
 import { getAllCategories } from "../services/categoryService";
+import { DevicePhoneMobileIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
 
 const SearchSection = ({ onSearch, onCategorySelect }) => {
+  const navigate = useNavigate();
   const [budget, setBudget] = useState("");
+  const [priority, setPriority] = useState("Camera");
+  const [brand, setBrand] = useState("");
   const [query, setQuery] = useState("");
   const [categories, setCategories] = useState([]);
-  console.log("categories", categories);  
-  const [activeCategory, setActiveCategory] = useState("For You");
+  const [activeCategory, setActiveCategory] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [searchResult, setSearchResult] = useState(null);
 
-  // const getCategoryIcon = (categoryName) => {
-  //   const iconMap = {
-  //     'For You': (
-  //       <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-  //         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-  //       </svg>
-  //     ),
-  //     'Fashion': (
-  //       <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-  //         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-  //       </svg>
-  //     ),
-  //     'Mobiles': (
-  //       <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-  //         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a1 1 0 001-1V4a1 1 0 00-1-1H8a1 1 0 00-1 1v16a1 1 0 001 1z" />
-  //       </svg>
-  //     ),
-  //     'Smartphones': (
-  //       <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-  //         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a1 1 0 001-1V4a1 1 0 00-1-1H8a1 1 0 00-1 1v16a1 1 0 001 1z" />
-  //       </svg>
-  //     ),
-  //     'Electronics': (
-  //       <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-  //         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-  //       </svg>
-  //     ),
-  //     'Appliances': (
-  //       <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-  //         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17h6m-3-3v6m-7-6h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2z" />
-  //       </svg>
-  //     ),
-  //     'Beauty': (
-  //       <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-  //         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-  //       </svg>
-  //     )
-  //   };
-    
-  //   return iconMap[categoryName] || (
-  //     <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-  //       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-  //     </svg>
-  //   );
-  // };
+  const categoryIcons = {
+    smartphones: DevicePhoneMobileIcon,
+  };
 
+  // 🔹 Fetch categories & select default (NO auto-search)
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const data = await getAllCategories();
-        console.log("cates", data.data);
-        setCategories(data.data);
+        const res = await getAllCategories();
+        const categoriesList = res.data || [];
+
+        setCategories(categoriesList);
+
+        if (categoriesList.length > 0) {
+          const defaultCategory =
+            categoriesList.find(
+              (c) => c.category_name.toLowerCase() === "smartphones"
+            ) || categoriesList[0];
+
+          setActiveCategory(defaultCategory);
+          onCategorySelect?.(defaultCategory.category_name);
+        }
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
     };
+
     fetchCategories();
   }, []);
 
+  // 🔹 Manual category click
   const handleCategoryClick = (category) => {
-    setActiveCategory(category.name);
-    // Call the category select handler if provided
-    if (onCategorySelect) {
-      onCategorySelect(category.name);
-    }
-    if (onSearch) {
-      onSearch({ category: category.name, query, budget });
-    }
+    setActiveCategory(category);
+
+    onCategorySelect?.(category.category_name);
   };
 
-  const handleSearch = () => {
-    if (onSearch) {
-      onSearch({ query, budget, category: activeCategory });
-    }
+  // 🔹 Manual search (Enter key)
+
+  const handleRecommendation = async () => {
+    if (!budget.trim()) return;
+    const searchPayload = {
+      query: `${brand ? brand + ' ' : ''}${priority.toLowerCase()} smartphone under ${budget}`,
+      brand: brand.toLowerCase(),
+      priority: priority.toLowerCase(),
+      category: "smartphones",
+      budget: budget,
+    };
+    navigate("/search-results", { state: searchPayload });
   };
 
   return (
-    <div className="w-full max-w-5xl mx-auto px-3 md:px-6 pt-4 md:pt-8 pb-3 md:pb-6">
-      {/* Heading */}
-      <div className="text-center mb-6 md:mb-8">
-        <h1 className="text-headingLG md:text-headingXL text-primary font-bold text-dark mb-2">
-          ASK SRAVA Before You Buy
+    <div>
+      <div className="w-full max-w-5xl mx-auto px-3 md:px-6 pt-4 md:pt-8 pb-3 md:pb-6">
+        {/* Heading */}
+        <h1 className="text-3xl md:text-4xl font-bold text-center">
+          Confused about what phone to buy?
+          <br />
+          Get <span className="text-primary">ONE best recommendation</span>.
         </h1>
-        <p className="text-labelMD md:text-valueLG text-gray-600 text-accent max-w-md mx-auto">
-          Get honest recommendations from Amazon & Flipkart
+
+        <p className="text-center text-gray-600 mt-3 max-w-xl mx-auto">
+          Tell us your budget and priority. Ask Srava analyzes top products and
+          gives you a clear answer.
         </p>
-      </div>
 
-      {/* Search */}
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-6">
-        <div className="flex items-center gap-3 md:gap-4">
-          <div className="w-full">
-            <input
-              type="text"
-              placeholder="Search for any product…"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              className="w-full px-4 md:px-5 py-3 md:py-4 border border-gray-200 rounded-xl text-labelMD md:text-labelLG placeholder-gray-400 transition-all border border-primary"
-            />
-          </div>
+        <div className="bg-white rounded-2xl shadow-lg p-6 mt-6">
+          <input
+            placeholder="Tell me the brand"
+            value={brand}
+            onChange={(e) => setBrand(e.target.value)}
+            className="w-full border rounded-xl px-4 py-4 mb-4 na"
+          />
+          <input
+            placeholder="Example: Under ₹20,000"
+            value={budget}
+            onChange={(e) => setBudget(e.target.value)}
+            className="w-full border rounded-xl px-4 py-3 mb-4"
+          />
+
+          <select
+            value={priority}
+            onChange={(e) => setPriority(e.target.value)}
+            className="w-full border rounded-xl px-4 py-6 mb-4 h-16"
+          >
+            <option>Camera</option>
+            <option>Performance</option>
+            <option>Battery</option>
+            <option>Display</option>
+          </select>
+
+          <button
+            onClick={handleRecommendation}
+            className="w-full bg-primary text-white py-3 rounded-xl font-semibold"
+          >
+            Get my recommendation
+          </button>
+
+          <p className="text-xs text-gray-500 text-center mt-3">
+            You’ll get only one best option.
+          </p>
         </div>
 
-        {/* Horizontal Category Tabs */}
-        <div className="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-gray-100">
-          <div className="flex items-center gap-4 md:gap-20 justify-center overflow-x-auto scrollbar-hide pb-2">
-            {categories.map((cat) => {
-              const isActive = activeCategory === cat.name;
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => handleCategoryClick(cat)}
-                  className={`flex flex-col items-center gap-1 pb-2
-                              whitespace-nowrap transition-colors
-                              ${
-                                isActive
-                                  ? "text-primary border-b-2 border-primary"
-                                  : "text-gray-600 hover:text-gray-800"
-                              }`}
-                >
-                  <div className="w-5 h-5 md:w-6 md:h-6 flex items-center justify-center">
-                    {/* {React.cloneElement(cat.icon, {
-                      className: "w-5 h-5 md:w-6 md:h-6",
-                    })} */}
-                  </div>
-                  <span className="text-labelXS md:text-labelSM font-medium leading-tight">
-                    {cat.name}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+        {/* Search */}
+        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-6">
+          {/* <input
+            type="text"
+            placeholder="Search for any product…"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+            className="w-full px-4 md:px-5 py-3 md:py-4 border border-primary rounded-xl text-labelMD md:text-labelLG placeholder-gray-400"
+          /> */}
+
+          {/* Category Tabs */}
+          {/* <div className="mt-6 md:mt-8 pt-2 md:pt-6 border-t border-gray-100">
+            <div className="flex items-center gap-4 md:gap-20 justify-center overflow-x-auto pb-2">
+              {categories.map((cat) => {
+                const isActive = activeCategory?.id === cat.id;
+                const Icon = categoryIcons[cat.category_name.toLowerCase()];
+
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => handleCategoryClick(cat)}
+                    className={`flex flex-col items-center gap-1 pb-2 transition-colors ${
+                      isActive
+                        ? "text-primary border-b-2 border-primary"
+                        : "text-gray-600 hover:text-gray-800"
+                    }`}
+                  >
+                    {Icon && <Icon className="w-5 h-5 md:w-6 md:h-6" />}
+                    <span className="text-labelXS md:text-labelSM font-medium">
+                      {cat.category_name}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div> */}
         </div>
       </div>
+
+      {/* Products */}
+      {/* <ProductGrid
+        category={activeCategory?.category_name}
+        categoryId={activeCategory?.category_id}
+        searchResult={searchResult}
+      /> */}
     </div>
   );
 };
