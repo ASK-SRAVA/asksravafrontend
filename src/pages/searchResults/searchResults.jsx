@@ -164,7 +164,7 @@ const SearchResults = () => {
         
         {/* Feedback Section */}
         {searchResults.length > 0 && (
-          <div className="mt-8">
+          <div className="mt-6 mb-4">
             <FeedbackForm />
           </div>
         )}

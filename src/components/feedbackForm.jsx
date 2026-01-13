@@ -35,7 +35,7 @@ const FeedbackForm = () => {
 
   if (success) {
     return (
-      <div className="text-center p-3 md:p-4 bg-green-50 rounded-xl mx-3 md:mx-0">
+      <div className="text-center p-3 md:p-4 bg-green-50 rounded-xl">
         <p className="text-green-700 font-medium text-labelMD">
           Thank you for your feedback 🙏
         </p>
@@ -44,7 +44,7 @@ const FeedbackForm = () => {
   }
 
   return (
-    <div className="bg-white p-3 md:p-4 rounded-xl border border-gray-200 mx-3 md:mx-0">
+    <div className="bg-white p-3 md:p-4 rounded-xl border border-gray-200">
       <h3 className="font-semibold text-dark mb-3 text-labelLG">
         Share your feedback
       </h3>
