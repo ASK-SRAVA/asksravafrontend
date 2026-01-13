@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { searchService } from '../../services/searchService';
+import FeedbackForm from '../../components/feedbackForm';
 
 const SearchResults = () => {
   const location = useLocation();
@@ -158,6 +159,13 @@ const SearchResults = () => {
             >
               Back to Home
             </button>
+          </div>
+        )}
+        
+        {/* Feedback Section */}
+        {searchResults.length > 0 && (
+          <div className="mt-8">
+            <FeedbackForm />
           </div>
         )}
       </div>
