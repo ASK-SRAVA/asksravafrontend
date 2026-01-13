@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Header from "../../components/header";
 import ComparisonModal from "../../components/comparisonModal";
-import SearchSection from "../../components/SearchSection";
+import SearchSection from "../../components/searchSection";
 
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
