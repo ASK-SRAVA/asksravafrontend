@@ -33,7 +33,9 @@ const SearchResults = () => {
             price: `₹${result.product.price.toLocaleString()}`,
             explanation: result.explanation,
             rating: 4.5, // Default rating since not provided
-            image: '📱' // Default image
+            image: '📱', // Default image
+            amazonLink: result.product.amazon_link,
+            flipkartLink: result.product.flipkart_link
           }]);
         } else {
           setSearchResults([]);
@@ -108,12 +110,41 @@ const SearchResults = () => {
                 </div>
                 
                 <div className="space-y-2">
-                  <button className="w-full bg-orange-500 text-white text-labelSM font-medium py-2.5 md:py-2 rounded-lg active:bg-orange-600 md:hover:bg-orange-600 transition-colors">
-                    View on Amazon
-                  </button>
-                  <button className="w-full bg-blue-500 text-white text-labelSM font-medium py-2.5 md:py-2 rounded-lg active:bg-blue-600 md:hover:bg-blue-600 transition-colors">
-                    View on Flipkart
-                  </button>
+                  {product.amazonLink ? (
+                    <a 
+                      href={product.amazonLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full bg-orange-500 text-white text-labelSM font-medium py-2.5 md:py-2 rounded-lg active:bg-orange-600 md:hover:bg-orange-600 transition-colors text-center"
+                    >
+                      View on Amazon
+                    </a>
+                  ) : (
+                    <button 
+                      disabled
+                      className="w-full bg-gray-400 text-white text-labelSM font-medium py-2.5 md:py-2 rounded-lg cursor-not-allowed text-center"
+                    >
+                      Not Available on Amazon
+                    </button>
+                  )}
+                  
+                  {product.flipkartLink ? (
+                    <a 
+                      href={product.flipkartLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full bg-blue-500 text-white text-labelSM font-medium py-2.5 md:py-2 rounded-lg active:bg-blue-600 md:hover:bg-blue-600 transition-colors text-center"
+                    >
+                      View on Flipkart
+                    </a>
+                  ) : (
+                    <button 
+                      disabled
+                      className="w-full bg-gray-400 text-white text-labelSM font-medium py-2.5 md:py-2 rounded-lg cursor-not-allowed text-center"
+                    >
+                      Not Available on Flipkart
+                    </button>
+                  )}
                 </div>
               </div>
             ))}
