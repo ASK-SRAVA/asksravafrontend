@@ -9,3 +9,13 @@ export const submitFeedback = async (payload) => {
     throw error;
   }
 };
+
+export const getAllFeedbacks = async () => {
+  try {
+    const response = await apiClient.get("/api/feedback/all");
+    return response;
+  } catch (error) {
+    console.error("Error fetching feedbacks:", error);
+    throw error;
+  }
+};
