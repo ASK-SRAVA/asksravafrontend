@@ -13,9 +13,8 @@ const Feedbacks = () => {
       setLoading(true);
       try {
         const response = await getAllFeedbacks();
-        setFeedbacks(response.data || []);
+        setFeedbacks(response.data.data || []);
       } catch (error) {
-        console.error('Error fetching feedbacks:', error);
         setFeedbacks([]);
       } finally {
         setLoading(false);
@@ -57,7 +56,7 @@ const Feedbacks = () => {
           <div className="space-y-4">
             {feedbacks.map((feedback) => (
               <div
-                key={feedback.id}
+                key={feedback.feedback_id}
                 className="bg-white rounded-xl border border-gray-100 p-3 md:p-4"
               >
                 <div className="flex items-start justify-between mb-2">
@@ -65,9 +64,6 @@ const Feedbacks = () => {
                     <h3 className="font-semibold text-dark text-labelMD">
                       {feedback.name || 'Anonymous'}
                     </h3>
-                    <p className="text-labelSM text-gray-500">
-                      {new Date(feedback.created_at).toLocaleDateString()}
-                    </p>
                   </div>
                 </div>
                 <p className="text-labelMD text-gray-700">
