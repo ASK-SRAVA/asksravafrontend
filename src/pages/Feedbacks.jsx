@@ -6,6 +6,7 @@ import { getAllFeedbacks } from '../services/feedbackService';
 const Feedbacks = () => {
   const navigate = useNavigate();
   const [feedbacks, setFeedbacks] = useState([]);
+  console.log(feedbacks);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {

@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import { getAllCategories } from "../services/categoryService";
 import { DevicePhoneMobileIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
+import { feedBackCount } from "../services/feedbackService";
 
 const SearchSection = ({ onSearch, onCategorySelect }) => {
   const navigate = useNavigate();
   const [budget, setBudget] = useState("");
   const [priority, setPriority] = useState("Camera");
   const [brand, setBrand] = useState("");
+  const [feedbackCount, setFeedbackCount] = useState(0);
+  const [animatedCount, setAnimatedCount] = useState(0);
   const [query, setQuery] = useState("");
   const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
@@ -64,9 +67,54 @@ const SearchSection = ({ onSearch, onCategorySelect }) => {
     };
     navigate("/search-results", { state: searchPayload });
   };
+  useEffect(() => {
+    const fetchFeedbackCount = async () => {
+      try {
+        const res = await feedBackCount();
+        const count = res.data.data || 0;
+        setFeedbackCount(count);
+
+        // Animate counter from 0 to final count
+        const duration = 2000; // 2 seconds
+        const steps = 60;
+        const increment = count / steps;
+        let current = 0;
+
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= count) {
+            setAnimatedCount(count);
+            clearInterval(timer);
+          } else {
+            setAnimatedCount(Math.floor(current));
+          }
+        }, duration / steps);
+      } catch (error) {
+        console.error("Error fetching feedback count:", error);
+        setFeedbackCount(0);
+        setAnimatedCount(0);
+      }
+    };
+    fetchFeedbackCount();
+  }, []);
 
   return (
     <div>
+      {/* Social Proof Highlight */}
+      <div className="max-w-5xl mx-auto px-3 md:px-6 ">
+        <div className="flex justify-center">
+          <div className="bg-white border border-gray-200 px-4 py-3 rounded-xl shadow-sm">
+            <div className="flex items-center gap-3">
+              {/* Text */}
+
+              <p className="text-sm font-semibold text-gray-900">
+                {animatedCount.toLocaleString()}+{" "}
+                <span className="text-red-500">people</span> shared feedback
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="w-full max-w-5xl mx-auto px-3 md:px-6 pt-4 md:pt-8 pb-3 md:pb-6">
         {/* Heading */}
         <h1 className="text-xl md:text-4xl font-bold text-center">
@@ -75,14 +123,14 @@ const SearchSection = ({ onSearch, onCategorySelect }) => {
           Get <span className="text-primary">ONE best recommendation</span>.
         </h1>
 
-        <p className="text-center text-sm text-gray-600 mt-3 max-w-xl mx-auto">
-          Tell us your budget and priority. Ask Srava analyzes top products and
+        <p className="text-center text-xs sm:text-md text-gray-600 mt-3 max-w-xl mx-auto">
+          Tell us your budget and priority. Ask Srava 
           gives you a clear answer.
         </p>
 
         <div className="bg-white rounded-2xl shadow-lg p-6 mt-6">
           <label className="block text-sm sm:text-md font-medium text-gray-700 mb-1">
-            Brand 
+            Brand
           </label>
           <input
             placeholder="Tell me the brand"

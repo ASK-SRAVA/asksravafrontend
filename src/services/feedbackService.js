@@ -19,3 +19,14 @@ export const getAllFeedbacks = async () => {
     throw error;
   }
 };
+
+export const feedBackCount = async () => {
+  try {
+    const count = await apiClient.get("/api/feedback/count");
+    console.log("Feedback count response:", count);
+    return count;
+  } catch (error) {
+    console.error("Error fetching feedback count:", error);
+    throw error;
+  }
+};
