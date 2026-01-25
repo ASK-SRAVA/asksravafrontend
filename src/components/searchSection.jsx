@@ -109,7 +109,7 @@ const SearchSection = ({ onSearch, onCategorySelect }) => {
 
               <p className="text-sm font-semibold text-gray-900">
                 {animatedCount.toLocaleString()}+{" "}
-                <span className="text-red-500">people</span> shared feedback
+                <span className="text-red-500">people</span> shared feedbacks
               </p>
             </div>
           </div>
