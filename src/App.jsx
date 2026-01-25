@@ -4,7 +4,7 @@ import Home from "./pages/home/home";
 import SearchResults from "./pages/searchResults/searchResults";
 import Feedbacks from "./pages/Feedbacks";
 import { usePageTitle } from "./utils/usePageTitles";
-import AboutUs from "./pages/aboutUs";
+import AboutUs from "./pages/AboutUs";
 
 const AppContent = () => {
   usePageTitle();
