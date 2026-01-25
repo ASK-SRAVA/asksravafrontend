@@ -48,7 +48,9 @@ const FeedbackForm = () => {
       <h3 className="font-semibold text-dark mb-3 text-labelLG">
         Share your feedback
       </h3>
-
+      <label className="block font-medium text-sm sm:text-md text-gray-700 mb-1">
+        Name
+      </label>
       <input
         type="text"
         placeholder="Your name (optional)"
@@ -56,7 +58,9 @@ const FeedbackForm = () => {
         onChange={(e) => setName(e.target.value)}
         className="w-full mb-3 px-3 py-2.5 md:py-2 border rounded-lg text-labelMD"
       />
-
+      <label className="block font-medium text-sm sm:text-md text-gray-700 mb-1">
+        Feedback<span className="text-red-600">*</span>
+      </label>
       <textarea
         placeholder="What do you think about AskSrava?"
         value={feedback}
@@ -64,9 +68,7 @@ const FeedbackForm = () => {
         className="w-full mb-3 px-3 py-2.5 md:py-2 border rounded-lg min-h-[80px] md:min-h-[60px] text-labelMD resize-none"
       />
 
-      {error && (
-        <p className="text-red-500 text-labelSM mb-3">{error}</p>
-      )}
+      {error && <p className="text-red-500 text-labelSM mb-3">{error}</p>}
 
       <button
         onClick={handleSubmit}

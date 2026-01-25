@@ -3,6 +3,7 @@ export const PageTitles = {
 
     "/":"AskSrava - Get Smart Product Recommendations",
     "/search-results":"Your Perfect Match - AskSrava",
-    "/feedbacks":"User Feedbacks - AskSrava"
+    "/feedbacks":"User Feedbacks - AskSrava",
+    "/about":"About Us - AskSrava"
 
 }

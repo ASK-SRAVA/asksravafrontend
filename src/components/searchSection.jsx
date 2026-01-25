@@ -30,7 +30,7 @@ const SearchSection = ({ onSearch, onCategorySelect }) => {
         if (categoriesList.length > 0) {
           const defaultCategory =
             categoriesList.find(
-              (c) => c.category_name.toLowerCase() === "smartphones"
+              (c) => c.category_name.toLowerCase() === "smartphones",
             ) || categoriesList[0];
 
           setActiveCategory(defaultCategory);
@@ -56,7 +56,7 @@ const SearchSection = ({ onSearch, onCategorySelect }) => {
   const handleRecommendation = async () => {
     if (!budget.trim()) return;
     const searchPayload = {
-      query: `${brand ? brand + ' ' : ''}${priority.toLowerCase()} smartphone under ${budget}`,
+      query: `${brand ? brand + " " : ""}${priority.toLowerCase()} smartphone under ${budget}`,
       brand: brand.toLowerCase(),
       priority: priority.toLowerCase(),
       category: "smartphones",
@@ -69,24 +69,31 @@ const SearchSection = ({ onSearch, onCategorySelect }) => {
     <div>
       <div className="w-full max-w-5xl mx-auto px-3 md:px-6 pt-4 md:pt-8 pb-3 md:pb-6">
         {/* Heading */}
-        <h1 className="text-3xl md:text-4xl font-bold text-center">
+        <h1 className="text-xl md:text-4xl font-bold text-center">
           Confused about what phone to buy?
           <br />
           Get <span className="text-primary">ONE best recommendation</span>.
         </h1>
 
-        <p className="text-center text-gray-600 mt-3 max-w-xl mx-auto">
+        <p className="text-center text-sm text-gray-600 mt-3 max-w-xl mx-auto">
           Tell us your budget and priority. Ask Srava analyzes top products and
           gives you a clear answer.
         </p>
 
         <div className="bg-white rounded-2xl shadow-lg p-6 mt-6">
+          <label className="block text-sm sm:text-md font-medium text-gray-700 mb-1">
+            Brand 
+          </label>
           <input
             placeholder="Tell me the brand"
             value={brand}
             onChange={(e) => setBrand(e.target.value)}
-            className="w-full border rounded-xl px-4 py-4 mb-4 na"
+            className="w-full border rounded-xl px-4 py-4 mb-4"
           />
+
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Budget<span className="text-red-700">*</span>
+          </label>
           <input
             placeholder="Example: Under ₹20,000"
             value={budget}
@@ -94,11 +101,15 @@ const SearchSection = ({ onSearch, onCategorySelect }) => {
             className="w-full border rounded-xl px-4 py-3 mb-4"
           />
 
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Priority
+          </label>
           <select
             value={priority}
             onChange={(e) => setPriority(e.target.value)}
-            className="w-full border rounded-xl px-4 py-6 mb-4 h-16"
+            className="w-full border rounded-xl px-4 py-3 mb-4 h-14"
           >
+            <option value="">Select priority</option>
             <option>Camera</option>
             <option>Performance</option>
             <option>Battery</option>
