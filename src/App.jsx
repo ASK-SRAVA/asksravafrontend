@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/home/home";
 import SearchResults from "./pages/searchResults/searchResults";
 import Feedbacks from "./pages/Feedbacks";
-import { usePageTitle } from "./utils/usePageTitles";
 import AboutUs from "./pages/AboutUs";
+import { usePageTitle } from "./utils/usePageTitles";
 
 const AppContent = () => {
   usePageTitle();
