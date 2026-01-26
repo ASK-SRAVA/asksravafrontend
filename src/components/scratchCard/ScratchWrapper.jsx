@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ScratchCard from "./scrathcCard";
+import ScratchCard from "./ScratchCard";
 
 const ScratchWrapper = ({ children }) => {
   const [isRevealed, setIsRevealed] = useState(() => {
@@ -19,20 +19,22 @@ const ScratchWrapper = ({ children }) => {
     <div className="fixed inset-0 flex items-center justify-center z-50">
       {/* Premium Background Wallpaper */}
       <div className="absolute inset-0 bg-gray-900">
-         <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/40 via-purple-900/40 to-black/80"></div>
-         <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(#4F46E5 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
-         <div className="absolute inset-0 backdrop-blur-sm"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/40 via-purple-900/40 to-black/80"></div>
+        <div
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: "radial-gradient(#4F46E5 1px, transparent 1px)",
+            backgroundSize: "24px 24px",
+          }}
+        ></div>
+        <div className="absolute inset-0 backdrop-blur-sm"></div>
       </div>
       {/* Ticket Container */}
       <div className="relative w-[360px] bg-white rounded-2xl shadow-3xl shadow-purple-500/20 overflow-hidden font-sans transform hover:scale-105 transition-transform duration-300">
-
         {/* Top perforation */}
         <div className="absolute -top-3 left-0 right-0 flex justify-between px-4">
           {Array.from({ length: 9 }).map((_, i) => (
-            <div
-              key={i}
-              className="w-4 h-4 bg-black/60 rounded-full"
-            />
+            <div key={i} className="w-4 h-4 bg-black/60 rounded-full" />
           ))}
         </div>
 
@@ -42,7 +44,7 @@ const ScratchWrapper = ({ children }) => {
             AskSrava
           </p>
           <h2 className="text-xl font-bold mt-1 tracking-tight">
-            Smart Buying Pass 
+            Smart Buying Pass
           </h2>
         </div>
 
@@ -73,10 +75,7 @@ const ScratchWrapper = ({ children }) => {
         {/* Bottom perforation */}
         <div className="absolute -bottom-3 left-0 right-0 flex justify-between px-4">
           {Array.from({ length: 9 }).map((_, i) => (
-            <div
-              key={i}
-              className="w-4 h-4 bg-black/60 rounded-full"
-            />
+            <div key={i} className="w-4 h-4 bg-black/60 rounded-full" />
           ))}
         </div>
       </div>
