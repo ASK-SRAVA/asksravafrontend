@@ -95,7 +95,7 @@ const ScratchCard = ({ onComplete }) => {
       if (imageData.data[i] === 0) cleared++;
     }
 
-    if (cleared / (canvas.width * canvas.height) > 0.95) {
+    if (cleared / (canvas.width * canvas.height) > 0.70) {
       setCompleted(true); // scratched enough
     }
   };
