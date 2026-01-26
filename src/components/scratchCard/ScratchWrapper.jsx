@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import ScratchCard from "./scrathcCard";
 
 const ScratchWrapper = ({ children }) => {
-  const [isRevealed, setIsRevealed] = useState(false);
+  const [isRevealed, setIsRevealed] = useState(() => {
+    return sessionStorage.getItem("scratchCardRevealed") === "true";
+  });
 
   const handleScratchComplete = () => {
+    sessionStorage.setItem("scratchCardRevealed", "true");
     setIsRevealed(true);
   };
 
