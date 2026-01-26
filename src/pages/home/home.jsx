@@ -4,6 +4,7 @@ import ComparisonModal from "../../components/comparisonModal";
 import SearchSection from "../../components/searchSection";
 import FeedbackForm from "../../components/feedbackForm";
 import Footer from "../../components/Footer";
+import ScratchWrapper from "../../components/scratchCard/ScratchWrapper";
 
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -20,7 +21,8 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-secondary pb-16 md:pb-0">
+    <ScratchWrapper>
+      <div className="min-h-screen bg-secondary pb-16 md:pb-0">
       <Header />
       <div>
         <SearchSection onCategorySelect={handleCategorySelect} />
@@ -61,7 +63,8 @@ const Home = () => {
 
       <ComparisonModal />
       <Footer />
-    </div>
+      </div>
+    </ScratchWrapper>
   );
 };
 
