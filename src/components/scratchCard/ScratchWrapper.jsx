@@ -13,9 +13,15 @@ const ScratchWrapper = ({ children }) => {
   }
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+    <div className="fixed inset-0 flex items-center justify-center z-50">
+      {/* Premium Background Wallpaper */}
+      <div className="absolute inset-0 bg-gray-900">
+         <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/40 via-purple-900/40 to-black/80"></div>
+         <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(#4F46E5 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
+         <div className="absolute inset-0 backdrop-blur-sm"></div>
+      </div>
       {/* Ticket Container */}
-      <div className="relative w-[360px] bg-white rounded-2xl shadow-2xl overflow-hidden">
+      <div className="relative w-[360px] bg-white rounded-2xl shadow-3xl shadow-purple-500/20 overflow-hidden font-sans transform hover:scale-105 transition-transform duration-300">
 
         {/* Top perforation */}
         <div className="absolute -top-3 left-0 right-0 flex justify-between px-4">
@@ -28,11 +34,11 @@ const ScratchWrapper = ({ children }) => {
         </div>
 
         {/* Header */}
-        <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-center py-4">
-          <p className="text-xs tracking-widest uppercase">
+        <div className="bg-gradient-to-r from-primary to-accent text-white text-center py-5">
+          <p className="text-xs tracking-[0.2em] font-medium uppercase opacity-90">
             AskSrava
           </p>
-          <h2 className="text-lg font-bold mt-1">
+          <h2 className="text-xl font-bold mt-1 tracking-tight">
             Smart Buying Pass 
           </h2>
         </div>

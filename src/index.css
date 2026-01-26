@@ -34,11 +34,14 @@
   font-family: 'Poppins', sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   padding: 0;
-  background-color: #FEFFFE;
-  color: #0B0500;
+  @apply bg-secondary text-dark;
 }
 
 /* Hide scrollbar but allow scrolling */

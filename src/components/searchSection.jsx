@@ -101,119 +101,104 @@ const SearchSection = ({ onSearch, onCategorySelect }) => {
   return (
     <div>
       {/* Social Proof Highlight */}
-      <div className="max-w-5xl mx-auto px-3 md:px-6 ">
+      <div className="max-w-5xl mx-auto px-3 md:px-6 mb-8">
         <div className="flex justify-center">
-          <div className="bg-white border border-gray-200 px-4 py-3 rounded-xl shadow-sm">
-            <div className="flex items-center gap-3">
-              {/* Text */}
-
-              <p className="text-sm font-semibold text-gray-900">
-                {animatedCount.toLocaleString()}+{" "}
-                <span className="text-red-500">people</span> shared feedbacks
+          <div className="bg-surface/80 backdrop-blur-sm border border-indigo-100 px-4 py-2 rounded-full shadow-md shadow-indigo-100/50">
+            <div className="flex items-center gap-2">
+              <span className="flex h-2 w-2 relative">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+              </span>
+              <p className="text-sm font-medium text-dark">
+                <span className="font-bold text-primary">{animatedCount.toLocaleString()}+</span>{" "}
+                people found their perfect match
               </p>
             </div>
           </div>
         </div>
       </div>
-      <div className="w-full max-w-5xl mx-auto px-3 md:px-6 pt-4 md:pt-8 pb-3 md:pb-6">
+      <div className="w-full max-w-5xl mx-auto px-3 md:px-6 pt-2 md:pt-4 pb-3 md:pb-6">
         {/* Heading */}
-        <h1 className="text-xl md:text-4xl font-bold text-center">
-          Confused about what phone to buy?
-          <br />
-          Get <span className="text-primary">ONE best recommendation</span>.
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-center tracking-tight text-dark leading-tight">
+          Confused which phone to buy?
+          <br className="hidden md:block" />
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent"> Ask Srava.</span>
         </h1>
 
-        <p className="text-center text-xs sm:text-md text-gray-600 mt-3 max-w-xl mx-auto">
-          Tell us your budget and priority. Ask Srava 
-          gives you a clear answer.
+        <p className="text-center text-base md:text-lg text-gray-500 mt-4 max-w-2xl mx-auto leading-relaxed">
+          Tell us your budget and priorities. We analyze thousands of options to give you the <span className="font-semibold text-primary">one best recommendation</span>.
         </p>
 
-        <div className="bg-white rounded-2xl shadow-lg p-6 mt-6">
-          <label className="block text-sm sm:text-md font-medium text-gray-700 mb-1">
-            Brand
-          </label>
-          <input
-            placeholder="Tell me the brand"
-            value={brand}
-            onChange={(e) => setBrand(e.target.value)}
-            className="w-full border rounded-xl px-4 py-4 mb-4"
-          />
-
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Budget<span className="text-red-700">*</span>
-          </label>
-          <input
-            placeholder="Example: Under ₹20,000"
-            value={budget}
-            onChange={(e) => setBudget(e.target.value)}
-            className="w-full border rounded-xl px-4 py-3 mb-4"
-          />
-
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Priority
-          </label>
-          <select
-            value={priority}
-            onChange={(e) => setPriority(e.target.value)}
-            className="w-full border rounded-xl px-4 py-3 mb-4 h-14"
-          >
-            <option value="">Select priority</option>
-            <option>Camera</option>
-            <option>Performance</option>
-            <option>Battery</option>
-            <option>Display</option>
-          </select>
-
-          <button
-            onClick={handleRecommendation}
-            className="w-full bg-primary text-white py-3 rounded-xl font-semibold"
-          >
-            Get my recommendation
-          </button>
-
-          <p className="text-xs text-gray-500 text-center mt-3">
-            You’ll get only one best option.
-          </p>
-        </div>
-
-        {/* Search */}
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-6">
-          {/* <input
-            type="text"
-            placeholder="Search for any product…"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-            className="w-full px-4 md:px-5 py-3 md:py-4 border border-primary rounded-xl text-labelMD md:text-labelLG placeholder-gray-400"
-          /> */}
-
-          {/* Category Tabs */}
-          {/* <div className="mt-6 md:mt-8 pt-2 md:pt-6 border-t border-gray-100">
-            <div className="flex items-center gap-4 md:gap-20 justify-center overflow-x-auto pb-2">
-              {categories.map((cat) => {
-                const isActive = activeCategory?.id === cat.id;
-                const Icon = categoryIcons[cat.category_name.toLowerCase()];
-
-                return (
-                  <button
-                    key={cat.id}
-                    onClick={() => handleCategoryClick(cat)}
-                    className={`flex flex-col items-center gap-1 pb-2 transition-colors ${
-                      isActive
-                        ? "text-primary border-b-2 border-primary"
-                        : "text-gray-600 hover:text-gray-800"
-                    }`}
-                  >
-                    {Icon && <Icon className="w-5 h-5 md:w-6 md:h-6" />}
-                    <span className="text-labelXS md:text-labelSM font-medium">
-                      {cat.category_name}
-                    </span>
-                  </button>
-                );
-              })}
+        <div className="bg-surface rounded-3xl shadow-2xl shadow-indigo-100/50 p-6 md:p-8 mt-6 border border-indigo-50 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-gray-700">
+                Brand Preference
+              </label>
+              <input
+                placeholder="e.g. Samsung, Apple"
+                value={brand}
+                onChange={(e) => setBrand(e.target.value)}
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none text-dark placeholder-gray-400"
+              />
             </div>
-          </div> */}
+
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-gray-700">
+                Your Budget <span className="text-accent">*</span>
+              </label>
+              <input
+                placeholder="e.g. 20000"
+                value={budget}
+                onChange={(e) => setBudget(e.target.value)}
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none text-dark placeholder-gray-400"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-gray-700">
+                Top Priority
+              </label>
+              <div className="relative">
+                <select
+                  value={priority}
+                  onChange={(e) => setPriority(e.target.value)}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none text-dark appearance-none"
+                >
+                  <option value="">Select priority</option>
+                  <option>Camera</option>
+                  <option>Performance</option>
+                  <option>Battery</option>
+                  <option>Display</option>
+                </select>
+                <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-500">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8">
+            <button
+              onClick={handleRecommendation}
+              className="w-full bg-gradient-to-r from-primary to-indigo-600 text-white py-4 rounded-xl font-bold text-lg shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:scale-[1.02] active:scale-[0.98] transition-all transform flex items-center justify-center gap-2"
+            >
+              Get Recommendation
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+            </button>
+             <p className="text-xs text-gray-400 text-center mt-3 flex items-center justify-center gap-1">
+               <svg className="w-3 h-3 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path></svg>
+               AI-powered un-biased result
+            </p>
+          </div>
         </div>
+
+        {/* Search - Glass Effect Placeholder if needed later */}
+        {/* <div className="bg-surface/50 rounded-2xl border border-white/50 p-4 md:p-6 mt-8">
+           ...
+        </div> */}
       </div>
 
       {/* Products */}
